@@ -6,230 +6,263 @@
 
 <style>
 body{
-    margin:0;
-    font-family: Arial;
-    background:linear-gradient(#ffd6ec,#e6ccff);
-    text-align:center;
+margin:0;
+font-family:Arial;
+background:linear-gradient(#ffd6ec,#e6ccff);
+text-align:center;
+overflow-x:hidden;
+}
+
+/* Floating Hearts */
+.heart{
+position:fixed;
+font-size:20px;
+animation:float 7s linear infinite;
+}
+
+@keyframes float{
+from{transform:translateY(100vh);opacity:1;}
+to{transform:translateY(-10vh);opacity:0;}
 }
 
 /* INTRO */
 .intro{
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:28px;
-    font-weight:bold;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:28px;
+font-weight:bold;
 }
 
 /* CARDS */
-.cards{
-    padding:30px 15px;
-}
+.cards{ padding:30px 15px; display:none; }
 
 .flashcard{
-    width:90%;
-    height:220px;
-    margin:25px auto;
-    perspective:1000px;
+width:90%;
+height:220px;
+margin:25px auto;
+perspective:1000px;
 }
 
 .inner{
-    width:100%;
-    height:100%;
-    position:relative;
-    transition:transform 0.7s;
-    transform-style:preserve-3d;
+width:100%;
+height:100%;
+position:relative;
+transition:transform 0.7s;
+transform-style:preserve-3d;
 }
 
-.flashcard:active .inner{
-    transform:rotateY(180deg);
-}
+.flipped{ transform:rotateY(180deg); }
 
 .front,.back{
-    position:absolute;
-    width:100%;
-    height:100%;
-    border-radius:25px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:24px;
-    padding:20px;
-    backface-visibility:hidden;
-    box-shadow:0 6px 20px rgba(0,0,0,0.2);
+position:absolute;
+width:100%;
+height:100%;
+border-radius:25px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:24px;
+padding:20px;
+backface-visibility:hidden;
+box-shadow:0 6px 20px rgba(0,0,0,0.2);
 }
 
 .front{ background:white; }
+
 .back{
-    background:#ffb3d9;
-    transform:rotateY(180deg);
+background:#ffb3d9;
+transform:rotateY(180deg);
+}
+
+.nextBtn{
+display:none;
+padding:14px 30px;
+font-size:20px;
+border:none;
+border-radius:30px;
+background:#ff4da6;
+color:white;
 }
 
 /* ENVELOPE */
 .envelope{
-    width:200px;
-    height:140px;
-    background:#ff99cc;
-    margin:60px auto;
-    position:relative;
-    border-radius:10px;
-    cursor:pointer;
+width:220px;
+height:140px;
+margin:60px auto;
+position:relative;
+cursor:pointer;
+display:none;
 }
 
-.envelope:before{
-    content:"";
-    position:absolute;
-    top:0;
-    left:0;
-    width:0;
-    height:0;
-    border-left:100px solid transparent;
-    border-right:100px solid transparent;
-    border-top:70px solid #ff66b3;
+.base{
+width:100%;
+height:100%;
+background:#ff99cc;
+border-radius:10px;
 }
+
+.flap{
+position:absolute;
+top:0;
+width:100%;
+height:70px;
+background:#ff66b3;
+clip-path:polygon(0 0,100% 0,50% 100%);
+transform-origin:top;
+transition:transform 1s;
+}
+
+.open .flap{ transform:rotateX(180deg); }
 
 /* LETTER */
 .letter{
-    display:none;
-    background:white;
-    width:85%;
-    margin:20px auto;
-    padding:20px;
-    border-radius:20px;
-    box-shadow:0 5px 20px rgba(0,0,0,0.2);
-    animation:slideUp 1s ease;
-}
-
-@keyframes slideUp{
-    from{ transform:translateY(150px); opacity:0;}
-    to{ transform:translateY(0); opacity:1;}
+display:none;
+background:white;
+width:85%;
+margin:20px auto;
+padding:20px;
+border-radius:20px;
+box-shadow:0 5px 20px rgba(0,0,0,0.2);
 }
 
 /* PROPOSAL */
-.proposal{
-    margin:50px 0;
-}
+.proposal{ display:none; margin:40px 0; }
 
 button{
-    padding:14px 30px;
-    margin:10px;
-    font-size:20px;
-    border:none;
-    border-radius:30px;
-    background:#ff4da6;
-    color:white;
+padding:14px 30px;
+margin:10px;
+font-size:20px;
+border:none;
+border-radius:30px;
+background:#ff4da6;
+color:white;
 }
 
-/* RESULT */
-.result{
-    font-size:22px;
-    margin:30px;
-    font-weight:bold;
+/* CONFETTI */
+.confetti{
+position:fixed;
+width:10px;
+height:10px;
+background:pink;
+top:-10px;
+animation:fall 3s linear forwards;
+}
+
+@keyframes fall{
+to{ transform:translateY(100vh) rotate(720deg); }
+}
+
+/* Bear */
+.bear{
+width:200px;
+margin-top:20px;
+display:none;
 }
 </style>
 </head>
 
 <body>
 
-<!-- INTRO -->
 <div class="intro" id="intro">
 Something special is coming right up... 💖
 </div>
 
 <!-- CARDS -->
-<div class="cards" id="cards" style="display:none;">
+<div class="cards" id="cards">
 
-<h2>Tap The Cards ❤️</h2>
+<h2>Swipe or Tap The Cards ❤️</h2>
 
-<div class="flashcard">
+<div class="flashcard" ontouchstart="flipCard(this)" onclick="flipCard(this)">
 <div class="inner">
-<div class="front">Tap Me 🐻</div>
+<div class="front">Swipe / Tap Me 🐻</div>
 <div class="back">You are my comfort person 🌸</div>
 </div>
 </div>
 
-<div class="flashcard">
+<div class="flashcard" ontouchstart="flipCard(this)" onclick="flipCard(this)">
 <div class="inner">
 <div class="front">Another One 💕</div>
 <div class="back">I smile whenever I think about you 😊</div>
 </div>
 </div>
 
-<div class="flashcard">
+<div class="flashcard" ontouchstart="flipCard(this)" onclick="flipCard(this)">
 <div class="inner">
 <div class="front">Last One 💌</div>
 <div class="back">You make my world warmer ☀️</div>
 </div>
 </div>
 
+<button class="nextBtn" id="nextBtn" onclick="showEnvelope()">Next ❤️</button>
+
 </div>
 
 <!-- ENVELOPE -->
-<div class="envelope" onclick="openLetter()" id="envelope" style="display:none;"></div>
+<div class="envelope" id="envelope" onclick="openEnvelope()">
+<div class="flap"></div>
+<div class="base"></div>
+</div>
 
 <!-- LETTER -->
 <div class="letter" id="letter">
-
 <h3>💌 Love Letter</h3>
-
-<p>
-Hey love,<br><br>
-
-loveee youuuuu in a way where I care about how your day went, what’s on your mind, and what makes you happy or stressed.  
-I admire the person you are, your energy, and the way you show up when we’re together.  
-Being with you feels natural, safe, comfortable, and exciting all at onceee and I cant wait to experience it throughout life with YOU 🥹🫵✨
-<br><br>
-
-You’re my moon in the sky, the one who makes everything brighter.  
-Loving you feels as easy as breathing.  
-You’re my world, my everything.  
-Just being with you is like finding my home.  
-I love you more than words can express.
-</p>
-
+<p id="typedText"></p>
 </div>
 
 <!-- PROPOSAL -->
-<div class="proposal" id="proposal" style="display:none;">
+<div class="proposal" id="proposal">
 <h2>Will You Be Mine Forever? 💍</h2>
-
 <button onclick="yes()">YES ❤️</button>
 <button onclick="no()">NO 😜</button>
 </div>
 
-<div class="result" id="result"></div>
+<h2 id="result"></h2>
+
+<img class="bear" id="bear"
+src="https://media.tenor.com/mzY3f4XcK0IAAAAi/bear-love.gif">
 
 <script>
 
-/* SHOW CARDS AFTER INTRO */
+/* Floating Hearts */
+setInterval(()=>{
+let heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="❤️";
+heart.style.left=Math.random()*100+"vw";
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),7000);
+},600);
+
+let flippedCount=0;
+
+/* INTRO */
 setTimeout(()=>{
-document.getElementById("intro").style.display="none";
-document.getElementById("cards").style.display="block";
-document.getElementById("envelope").style.display="block";
+intro.style.display="none";
+cards.style.display="block";
 },2500);
 
-/* OPEN LETTER */
-function openLetter(){
-document.getElementById("letter").style.display="block";
-document.getElementById("proposal").style.display="block";
+/* CARD FLIP */
+function flipCard(card){
+let inner=card.querySelector(".inner");
+if(!inner.classList.contains("flipped")){
+inner.classList.add("flipped");
+flippedCount++;
+}
+if(flippedCount>=3){
+nextBtn.style.display="inline-block";
+}
 }
 
-/* ANSWERS */
-function yes(){
-document.getElementById("result").innerHTML=
-"i love u so much jaanu 💖 <br> ~ debus";
+/* SHOW ENVELOPE */
+function showEnvelope(){
+envelope.style.display="block";
+nextBtn.style.display="none";
 }
 
-function no(){
-document.getElementById("result").innerHTML=
-"Still gonna love you forever 😌💕";
-}
-
-</script>
-
-</body>
-</html>
+/* OPEN ENVELOPE */
+function
 
 
 
