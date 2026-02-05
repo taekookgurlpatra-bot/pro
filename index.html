@@ -1,31 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Cute Love Page 🐻💕</title>
+<title>Love Surprise 💖</title>
 
 <style>
 body{
-    background: linear-gradient(pink, lavender);
     font-family: Arial;
+    background: linear-gradient(#ffd6ec,#e6ccff);
     text-align:center;
-    overflow-x:hidden;
+    padding:20px;
 }
 
-h1{
-    color:#ff4da6;
-}
-
+/* FLASHCARDS */
 .card-container{
     display:flex;
     justify-content:center;
     flex-wrap:wrap;
-    gap:20px;
-    margin-top:30px;
+    gap:40px;
+    margin-top:40px;
 }
 
 .flashcard{
-    width:200px;
-    height:150px;
+    width:300px;
+    height:200px;
     perspective:1000px;
 }
 
@@ -33,7 +30,7 @@ h1{
     position:relative;
     width:100%;
     height:100%;
-    transition:transform 0.6s;
+    transition:transform 0.7s;
     transform-style:preserve-3d;
 }
 
@@ -45,12 +42,14 @@ h1{
     position:absolute;
     width:100%;
     height:100%;
-    border-radius:15px;
-    backface-visibility:hidden;
+    border-radius:20px;
     display:flex;
     align-items:center;
     justify-content:center;
-    padding:10px;
+    font-size:22px;
+    padding:20px;
+    backface-visibility:hidden;
+    box-shadow:0 4px 15px rgba(0,0,0,0.2);
 }
 
 .front{
@@ -58,99 +57,146 @@ h1{
 }
 
 .back{
-    background:#ffd6ec;
+    background:#ffb3d9;
     transform:rotateY(180deg);
 }
 
-/* Cute button */
-button{
-    padding:12px 25px;
-    font-size:18px;
-    border:none;
+/* LOVE LETTER */
+.letter{
+    max-width:700px;
+    margin:60px auto;
+    background:white;
+    padding:30px;
     border-radius:20px;
-    background:#ff66b2;
+    box-shadow:0 4px 15px rgba(0,0,0,0.2);
+    font-size:18px;
+    line-height:1.7;
+}
+
+/* BUTTON */
+button{
+    padding:15px 30px;
+    font-size:20px;
+    border:none;
+    border-radius:25px;
+    background:#ff4da6;
     color:white;
     cursor:pointer;
 }
 
 button:hover{
-    background:#ff3385;
+    background:#ff1a8c;
 }
 
-.bear{
-    width:150px;
+/* POPUP */
+.popup{
+    display:none;
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    background:white;
+    padding:40px;
+    border-radius:20px;
+    box-shadow:0 0 20px rgba(0,0,0,0.3);
+}
+
+.popup button{
     margin:10px;
-}
-
-.quote{
-    font-size:20px;
-    margin:20px;
-    color:#cc0066;
 }
 </style>
 </head>
 
 <body>
 
-<h1>💖 A Cute Love Surprise 💖</h1>
-
-<p class="quote">"Love is sweeter when shared with you 🐻💕"</p>
-
-<!-- Cute Bear Images -->
-<img class="bear" src="https://media.tenor.com/mzY3f4XcK0IAAAAi/bear-love.gif">
-<img class="bear" src="https://media.tenor.com/qgk1pXq2rM8AAAAi/cute-bear.gif">
-
-<h2>💌 Hover Flashcards 💌</h2>
+<h1>💖 Hover The Cards 💖</h1>
 
 <div class="card-container">
 
 <div class="flashcard">
 <div class="inner">
-<div class="front">Click Me 💕</div>
-<div class="back">You make my world brighter 🌎✨</div>
+<div class="front">Hover Me 💕</div>
+<div class="back">You are my favorite notification 📱❤️</div>
 </div>
 </div>
 
 <div class="flashcard">
 <div class="inner">
-<div class="front">Secret Message 🐻</div>
-<div class="back">I smile whenever I think of you 😊</div>
+<div class="front">Another One 🐻</div>
+<div class="back">You make my heart smile 😊</div>
 </div>
 </div>
 
 <div class="flashcard">
 <div class="inner">
-<div class="front">Another One 💌</div>
-<div class="back">You are my favorite person ❤️</div>
+<div class="front">Last Card 💌</div>
+<div class="back">Life feels softer with you 🌸</div>
 </div>
 </div>
 
 </div>
 
+<!-- LOVE LETTER -->
+<div class="letter">
+
+<h2>💌 Love Letter 💌</h2>
+
+<p>
+Hey love,<br><br>
+
+loveee youuuuu in a way where I care about how your day went, what’s on your mind, and what makes you happy or stressed.  
+I admire the person you are, your energy, and the way you show up when we’re together.  
+Being with you feels natural, and that’s rare. It feels safe, comfortable, and exciting all at onceee and I cant wait to experience it throughout life with YOU 🥹🫵✨
 <br><br>
 
-<button onclick="showLove()">Click For Surprise 🎁</button>
+You’re my moon in the sky, the one who makes everything brighter.  
+Loving you feels as easy as breathing, as natural as the sun rising each morning.  
+You’re not just a boy to me; you’re my world, my everything.  
+With you, I feel complete, understood, and cherished.  
+Just being with you is like finding my home.  
+I love you more than words can express, and I always will, my love.
+</p>
 
-<h2 id="message"></h2>
+</div>
+
+<br>
+
+<button onclick="openProposal()">Click For Something Important 💍</button>
+
+<!-- PROPOSAL POPUP -->
+<div class="popup" id="proposal">
+
+<h2>Will You Be Mine Forever? 💖</h2>
+
+<button onclick="yesAnswer()">YES 😍</button>
+<button id="noBtn" onmouseover="moveNo()">NO 😝</button>
+
+</div>
+
+<h2 id="result"></h2>
 
 <script>
 
-const quotes=[
-"You're my happy place 🏡💕",
-"I love you more every day 🌸",
-"You + Me = Forever ♾️",
-"You're my sweetest dream 🌙"
-];
+function openProposal(){
+    document.getElementById("proposal").style.display="block";
+}
 
-function showLove(){
-let random = quotes[Math.floor(Math.random()*quotes.length)];
-document.getElementById("message").innerHTML=random;
+function yesAnswer(){
+    document.getElementById("result").innerHTML="YAYYYY ❤️ You Made Me The Happiest Person!";
+}
+
+function moveNo(){
+    let btn=document.getElementById("noBtn");
+    btn.style.position="absolute";
+    btn.style.left=Math.random()*80+"vw";
+    btn.style.top=Math.random()*80+"vh";
 }
 
 </script>
 
 </body>
 </html>
+
 
 
 
