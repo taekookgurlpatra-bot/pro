@@ -1,201 +1,236 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Love Surprise 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You ❤️</title>
 
 <style>
 body{
+    margin:0;
     font-family: Arial;
-    background: linear-gradient(#ffd6ec,#e6ccff);
+    background:linear-gradient(#ffd6ec,#e6ccff);
     text-align:center;
-    padding:20px;
 }
 
-/* FLASHCARDS */
-.card-container{
+/* INTRO */
+.intro{
+    height:100vh;
     display:flex;
     justify-content:center;
-    flex-wrap:wrap;
-    gap:40px;
-    margin-top:40px;
+    align-items:center;
+    font-size:28px;
+    font-weight:bold;
+}
+
+/* CARDS */
+.cards{
+    padding:30px 15px;
 }
 
 .flashcard{
-    width:300px;
-    height:200px;
+    width:90%;
+    height:220px;
+    margin:25px auto;
     perspective:1000px;
 }
 
 .inner{
-    position:relative;
     width:100%;
     height:100%;
+    position:relative;
     transition:transform 0.7s;
     transform-style:preserve-3d;
 }
 
-.flashcard:hover .inner{
+.flashcard:active .inner{
     transform:rotateY(180deg);
 }
 
-.front, .back{
+.front,.back{
     position:absolute;
     width:100%;
     height:100%;
-    border-radius:20px;
+    border-radius:25px;
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:22px;
+    font-size:24px;
     padding:20px;
     backface-visibility:hidden;
-    box-shadow:0 4px 15px rgba(0,0,0,0.2);
+    box-shadow:0 6px 20px rgba(0,0,0,0.2);
 }
 
-.front{
-    background:white;
-}
-
+.front{ background:white; }
 .back{
     background:#ffb3d9;
     transform:rotateY(180deg);
 }
 
-/* LOVE LETTER */
-.letter{
-    max-width:700px;
+/* ENVELOPE */
+.envelope{
+    width:200px;
+    height:140px;
+    background:#ff99cc;
     margin:60px auto;
-    background:white;
-    padding:30px;
-    border-radius:20px;
-    box-shadow:0 4px 15px rgba(0,0,0,0.2);
-    font-size:18px;
-    line-height:1.7;
-}
-
-/* BUTTON */
-button{
-    padding:15px 30px;
-    font-size:20px;
-    border:none;
-    border-radius:25px;
-    background:#ff4da6;
-    color:white;
+    position:relative;
+    border-radius:10px;
     cursor:pointer;
 }
 
-button:hover{
-    background:#ff1a8c;
+.envelope:before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:0;
+    height:0;
+    border-left:100px solid transparent;
+    border-right:100px solid transparent;
+    border-top:70px solid #ff66b3;
 }
 
-/* POPUP */
-.popup{
+/* LETTER */
+.letter{
     display:none;
-    position:fixed;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
     background:white;
-    padding:40px;
+    width:85%;
+    margin:20px auto;
+    padding:20px;
     border-radius:20px;
-    box-shadow:0 0 20px rgba(0,0,0,0.3);
+    box-shadow:0 5px 20px rgba(0,0,0,0.2);
+    animation:slideUp 1s ease;
 }
 
-.popup button{
+@keyframes slideUp{
+    from{ transform:translateY(150px); opacity:0;}
+    to{ transform:translateY(0); opacity:1;}
+}
+
+/* PROPOSAL */
+.proposal{
+    margin:50px 0;
+}
+
+button{
+    padding:14px 30px;
     margin:10px;
+    font-size:20px;
+    border:none;
+    border-radius:30px;
+    background:#ff4da6;
+    color:white;
+}
+
+/* RESULT */
+.result{
+    font-size:22px;
+    margin:30px;
+    font-weight:bold;
 }
 </style>
 </head>
 
 <body>
 
-<h1>💖 Hover The Cards 💖</h1>
-
-<div class="card-container">
-
-<div class="flashcard">
-<div class="inner">
-<div class="front">Hover Me 💕</div>
-<div class="back">You are my favorite notification 📱❤️</div>
-</div>
+<!-- INTRO -->
+<div class="intro" id="intro">
+Something special is coming right up... 💖
 </div>
 
-<div class="flashcard">
-<div class="inner">
-<div class="front">Another One 🐻</div>
-<div class="back">You make my heart smile 😊</div>
-</div>
-</div>
+<!-- CARDS -->
+<div class="cards" id="cards" style="display:none;">
+
+<h2>Tap The Cards ❤️</h2>
 
 <div class="flashcard">
 <div class="inner">
-<div class="front">Last Card 💌</div>
-<div class="back">Life feels softer with you 🌸</div>
+<div class="front">Tap Me 🐻</div>
+<div class="back">You are my comfort person 🌸</div>
+</div>
+</div>
+
+<div class="flashcard">
+<div class="inner">
+<div class="front">Another One 💕</div>
+<div class="back">I smile whenever I think about you 😊</div>
+</div>
+</div>
+
+<div class="flashcard">
+<div class="inner">
+<div class="front">Last One 💌</div>
+<div class="back">You make my world warmer ☀️</div>
 </div>
 </div>
 
 </div>
 
-<!-- LOVE LETTER -->
-<div class="letter">
+<!-- ENVELOPE -->
+<div class="envelope" onclick="openLetter()" id="envelope" style="display:none;"></div>
 
-<h2>💌 Love Letter 💌</h2>
+<!-- LETTER -->
+<div class="letter" id="letter">
+
+<h3>💌 Love Letter</h3>
 
 <p>
 Hey love,<br><br>
 
 loveee youuuuu in a way where I care about how your day went, what’s on your mind, and what makes you happy or stressed.  
 I admire the person you are, your energy, and the way you show up when we’re together.  
-Being with you feels natural, and that’s rare. It feels safe, comfortable, and exciting all at onceee and I cant wait to experience it throughout life with YOU 🥹🫵✨
+Being with you feels natural, safe, comfortable, and exciting all at onceee and I cant wait to experience it throughout life with YOU 🥹🫵✨
 <br><br>
 
 You’re my moon in the sky, the one who makes everything brighter.  
-Loving you feels as easy as breathing, as natural as the sun rising each morning.  
-You’re not just a boy to me; you’re my world, my everything.  
-With you, I feel complete, understood, and cherished.  
+Loving you feels as easy as breathing.  
+You’re my world, my everything.  
 Just being with you is like finding my home.  
-I love you more than words can express, and I always will, my love.
+I love you more than words can express.
 </p>
 
 </div>
 
-<br>
+<!-- PROPOSAL -->
+<div class="proposal" id="proposal" style="display:none;">
+<h2>Will You Be Mine Forever? 💍</h2>
 
-<button onclick="openProposal()">Click For Something Important 💍</button>
-
-<!-- PROPOSAL POPUP -->
-<div class="popup" id="proposal">
-
-<h2>Will You Be Mine Forever? 💖</h2>
-
-<button onclick="yesAnswer()">YES 😍</button>
-<button id="noBtn" onmouseover="moveNo()">NO 😝</button>
-
+<button onclick="yes()">YES ❤️</button>
+<button onclick="no()">NO 😜</button>
 </div>
 
-<h2 id="result"></h2>
+<div class="result" id="result"></div>
 
 <script>
 
-function openProposal(){
-    document.getElementById("proposal").style.display="block";
+/* SHOW CARDS AFTER INTRO */
+setTimeout(()=>{
+document.getElementById("intro").style.display="none";
+document.getElementById("cards").style.display="block";
+document.getElementById("envelope").style.display="block";
+},2500);
+
+/* OPEN LETTER */
+function openLetter(){
+document.getElementById("letter").style.display="block";
+document.getElementById("proposal").style.display="block";
 }
 
-function yesAnswer(){
-    document.getElementById("result").innerHTML="YAYYYY ❤️ You Made Me The Happiest Person!";
+/* ANSWERS */
+function yes(){
+document.getElementById("result").innerHTML=
+"i love u so much jaanu 💖 <br> ~ debus";
 }
 
-function moveNo(){
-    let btn=document.getElementById("noBtn");
-    btn.style.position="absolute";
-    btn.style.left=Math.random()*80+"vw";
-    btn.style.top=Math.random()*80+"vh";
+function no(){
+document.getElementById("result").innerHTML=
+"Still gonna love you forever 😌💕";
 }
 
 </script>
 
 </body>
 </html>
+
 
 
 
