@@ -31,16 +31,16 @@ height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-font-size:28px;
+font-size:26px;
 font-weight:bold;
 }
 
 /* CARDS */
-.cards{ padding:30px 15px; display:none; }
+.cards{ display:none; padding:20px; }
 
 .flashcard{
 width:90%;
-height:220px;
+height:200px;
 margin:25px auto;
 perspective:1000px;
 }
@@ -59,18 +59,17 @@ transform-style:preserve-3d;
 position:absolute;
 width:100%;
 height:100%;
-border-radius:25px;
+border-radius:20px;
 display:flex;
 align-items:center;
 justify-content:center;
-font-size:24px;
+font-size:22px;
 padding:20px;
 backface-visibility:hidden;
-box-shadow:0 6px 20px rgba(0,0,0,0.2);
+box-shadow:0 5px 15px rgba(0,0,0,0.2);
 }
 
 .front{ background:white; }
-
 .back{
 background:#ffb3d9;
 transform:rotateY(180deg);
@@ -78,22 +77,22 @@ transform:rotateY(180deg);
 
 .nextBtn{
 display:none;
-padding:14px 30px;
-font-size:20px;
+padding:12px 25px;
+font-size:18px;
 border:none;
-border-radius:30px;
+border-radius:25px;
 background:#ff4da6;
 color:white;
 }
 
 /* ENVELOPE */
 .envelope{
-width:220px;
-height:140px;
-margin:60px auto;
+width:200px;
+height:130px;
+margin:50px auto;
 position:relative;
-cursor:pointer;
 display:none;
+cursor:pointer;
 }
 
 .base{
@@ -107,14 +106,16 @@ border-radius:10px;
 position:absolute;
 top:0;
 width:100%;
-height:70px;
+height:65px;
 background:#ff66b3;
 clip-path:polygon(0 0,100% 0,50% 100%);
 transform-origin:top;
-transition:transform 1s;
+transition:1s;
 }
 
-.open .flap{ transform:rotateX(180deg); }
+.open .flap{
+transform:rotateX(180deg);
+}
 
 /* LETTER */
 .letter{
@@ -124,23 +125,21 @@ width:85%;
 margin:20px auto;
 padding:20px;
 border-radius:20px;
-box-shadow:0 5px 20px rgba(0,0,0,0.2);
+box-shadow:0 5px 15px rgba(0,0,0,0.2);
 }
 
-/* PROPOSAL */
-.proposal{ display:none; margin:40px 0; }
+.proposal{ display:none; margin:30px; }
 
 button{
-padding:14px 30px;
+padding:12px 25px;
 margin:10px;
-font-size:20px;
+font-size:18px;
 border:none;
-border-radius:30px;
+border-radius:25px;
 background:#ff4da6;
 color:white;
 }
 
-/* CONFETTI */
 .confetti{
 position:fixed;
 width:10px;
@@ -151,14 +150,13 @@ animation:fall 3s linear forwards;
 }
 
 @keyframes fall{
-to{ transform:translateY(100vh) rotate(720deg); }
+to{transform:translateY(100vh) rotate(720deg);}
 }
 
-/* Bear */
 .bear{
-width:200px;
-margin-top:20px;
+width:180px;
 display:none;
+margin-top:20px;
 }
 </style>
 </head>
@@ -169,26 +167,25 @@ display:none;
 Something special is coming right up... 💖
 </div>
 
-<!-- CARDS -->
 <div class="cards" id="cards">
 
-<h2>Swipe or Tap The Cards ❤️</h2>
+<h2>Tap The Cards ❤️</h2>
 
-<div class="flashcard" ontouchstart="flipCard(this)" onclick="flipCard(this)">
+<div class="flashcard" onclick="flipCard(this)">
 <div class="inner">
-<div class="front">Swipe / Tap Me 🐻</div>
+<div class="front">Tap Me 🐻</div>
 <div class="back">You are my comfort person 🌸</div>
 </div>
 </div>
 
-<div class="flashcard" ontouchstart="flipCard(this)" onclick="flipCard(this)">
+<div class="flashcard" onclick="flipCard(this)">
 <div class="inner">
 <div class="front">Another One 💕</div>
 <div class="back">I smile whenever I think about you 😊</div>
 </div>
 </div>
 
-<div class="flashcard" ontouchstart="flipCard(this)" onclick="flipCard(this)">
+<div class="flashcard" onclick="flipCard(this)">
 <div class="inner">
 <div class="front">Last One 💌</div>
 <div class="back">You make my world warmer ☀️</div>
@@ -199,19 +196,16 @@ Something special is coming right up... 💖
 
 </div>
 
-<!-- ENVELOPE -->
 <div class="envelope" id="envelope" onclick="openEnvelope()">
 <div class="flap"></div>
 <div class="base"></div>
 </div>
 
-<!-- LETTER -->
 <div class="letter" id="letter">
 <h3>💌 Love Letter</h3>
 <p id="typedText"></p>
 </div>
 
-<!-- PROPOSAL -->
 <div class="proposal" id="proposal">
 <h2>Will You Be Mine Forever? 💍</h2>
 <button onclick="yes()">YES ❤️</button>
@@ -225,6 +219,17 @@ src="https://media.tenor.com/mzY3f4XcK0IAAAAi/bear-love.gif">
 
 <script>
 
+/* Grab Elements */
+const intro = document.getElementById("intro");
+const cards = document.getElementById("cards");
+const nextBtn = document.getElementById("nextBtn");
+const envelope = document.getElementById("envelope");
+const letter = document.getElementById("letter");
+const proposal = document.getElementById("proposal");
+const typedText = document.getElementById("typedText");
+const result = document.getElementById("result");
+const bear = document.getElementById("bear");
+
 /* Floating Hearts */
 setInterval(()=>{
 let heart=document.createElement("div");
@@ -233,36 +238,87 @@ heart.innerHTML="❤️";
 heart.style.left=Math.random()*100+"vw";
 document.body.appendChild(heart);
 setTimeout(()=>heart.remove(),7000);
-},600);
+},700);
 
-let flippedCount=0;
-
-/* INTRO */
+/* Intro → Cards */
 setTimeout(()=>{
 intro.style.display="none";
 cards.style.display="block";
 },2500);
 
-/* CARD FLIP */
+let flippedCount = 0;
+
 function flipCard(card){
-let inner=card.querySelector(".inner");
+let inner = card.querySelector(".inner");
 if(!inner.classList.contains("flipped")){
 inner.classList.add("flipped");
 flippedCount++;
 }
-if(flippedCount>=3){
+
+if(flippedCount >= 3){
 nextBtn.style.display="inline-block";
 }
 }
 
-/* SHOW ENVELOPE */
 function showEnvelope(){
 envelope.style.display="block";
 nextBtn.style.display="none";
 }
 
-/* OPEN ENVELOPE */
-function
+function openEnvelope(){
+envelope.classList.add("open");
+setTimeout(()=>{
+letter.style.display="block";
+proposal.style.display="block";
+typeLetter();
+},900);
+}
 
+/* Typing Love Letter */
+let msg = `Hey love,
 
+loveee youuuuu in a way where I care about how your day went, what’s on your mind, and what makes you happy or stressed.
+I admire the person you are, your energy, and the way you show up when we’re together.
+Being with you feels natural and rare. It feels safe, comfortable, and exciting all at onceee and I cant wait to experience it throughout life with YOU 🥹🫵✨
 
+You’re my moon in the sky, the one who makes everything brighter.
+Loving you feels as easy as breathing.
+You’re my world, my everything.
+Just being with you is like finding my home.
+I love you more than words can express.`;
+
+let i=0;
+
+function typeLetter(){
+if(i < msg.length){
+typedText.innerHTML += msg.charAt(i);
+i++;
+setTimeout(typeLetter,35);
+}
+}
+
+/* Confetti */
+function confetti(){
+for(let i=0;i<70;i++){
+let c=document.createElement("div");
+c.className="confetti";
+c.style.left=Math.random()*100+"vw";
+document.body.appendChild(c);
+setTimeout(()=>c.remove(),3000);
+}
+}
+
+function yes(){
+result.innerHTML="i love u so much jaanu 💖 <br> ~ debus";
+confetti();
+bear.style.display="block";
+}
+
+function no(){
+result.innerHTML="Still gonna love you forever 😌💕";
+}
+
+</script>
+
+</body>
+</html>
