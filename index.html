@@ -1,218 +1,156 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For Ashraf ❤️</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+<title>Cute Love Page 🐻💕</title>
 
 <style>
-
 body{
-margin:0;
-font-family:'Poppins',sans-serif;
-background:linear-gradient(120deg,#FADADD,#FFFDD0,#E6E6FA);
-overflow:hidden;
-text-align:center;
+    background: linear-gradient(pink, lavender);
+    font-family: Arial;
+    text-align:center;
+    overflow-x:hidden;
 }
 
-/* LOADING SCREEN */
-#loading{
-position:fixed;
-width:100%;
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-font-size:24px;
-background:#fff;
-z-index:999;
+h1{
+    color:#ff4da6;
 }
 
-/* INTRO */
-#intro{
-display:none;
-height:100vh;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-animation:fade 2s;
+.card-container{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:20px;
+    margin-top:30px;
 }
 
-/* MAIN */
-#main{
-display:none;
-padding:40px 20px;
-animation:fade 2s;
+.flashcard{
+    width:200px;
+    height:150px;
+    perspective:1000px;
 }
 
+.inner{
+    position:relative;
+    width:100%;
+    height:100%;
+    transition:transform 0.6s;
+    transform-style:preserve-3d;
+}
+
+.flashcard:hover .inner{
+    transform:rotateY(180deg);
+}
+
+.front, .back{
+    position:absolute;
+    width:100%;
+    height:100%;
+    border-radius:15px;
+    backface-visibility:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:10px;
+}
+
+.front{
+    background:white;
+}
+
+.back{
+    background:#ffd6ec;
+    transform:rotateY(180deg);
+}
+
+/* Cute button */
 button{
-padding:15px 30px;
-border:none;
-border-radius:30px;
-font-size:18px;
-cursor:pointer;
-margin:15px;
-transition:.3s;
-}
-
-.openBtn,.yes{
-background:#ff69b4;
-color:white;
-}
-
-.no{
-background:#ddd;
-position:relative;
+    padding:12px 25px;
+    font-size:18px;
+    border:none;
+    border-radius:20px;
+    background:#ff66b2;
+    color:white;
+    cursor:pointer;
 }
 
 button:hover{
-transform:scale(1.1);
+    background:#ff3385;
 }
 
-/* Typing */
-.typing{
-border-right:3px solid #444;
-white-space:nowrap;
-overflow:hidden;
-margin:auto;
-font-size:1.3em;
-max-width:600px;
+.bear{
+    width:150px;
+    margin:10px;
 }
 
-/* Floating Hearts */
-.heart{
-position:fixed;
-font-size:20px;
-animation:float 7s linear infinite;
+.quote{
+    font-size:20px;
+    margin:20px;
+    color:#cc0066;
 }
-
-@keyframes float{
-from{transform:translateY(100vh);opacity:1;}
-to{transform:translateY(-10vh);opacity:0;}
-}
-
-@keyframes fade{
-from{opacity:0;}
-to{opacity:1;}
-}
-
-/* Confetti */
-.confetti{
-position:fixed;
-width:10px;
-height:10px;
-background:pink;
-animation:fall 3s linear forwards;
-}
-
-@keyframes fall{
-to{transform:translateY(100vh) rotate(720deg);}
-}
-
 </style>
 </head>
 
 <body>
 
-<div id="loading">Preparing something special... ❤️</div>
+<h1>💖 A Cute Love Surprise 💖</h1>
 
-<!-- MUSIC -->
-<audio id="music" loop>
-<source src="https://cdn.pixabay.com/audio/2023/05/08/audio_57c4e1c8c5.mp3">
-</audio>
+<p class="quote">"Love is sweeter when shared with you 🐻💕"</p>
 
-<!-- INTRO -->
-<div id="intro">
-<h1>Hey Ashraf 🥹❤️</h1>
-<p>I made something for you...</p>
-<button class="openBtn" onclick="openMain()">Open 💌</button>
+<!-- Cute Bear Images -->
+<img class="bear" src="https://media.tenor.com/mzY3f4XcK0IAAAAi/bear-love.gif">
+<img class="bear" src="https://media.tenor.com/qgk1pXq2rM8AAAAi/cute-bear.gif">
+
+<h2>💌 Hover Flashcards 💌</h2>
+
+<div class="card-container">
+
+<div class="flashcard">
+<div class="inner">
+<div class="front">Click Me 💕</div>
+<div class="back">You make my world brighter 🌎✨</div>
+</div>
 </div>
 
-<!-- MAIN -->
-<div id="main">
+<div class="flashcard">
+<div class="inner">
+<div class="front">Secret Message 🐻</div>
+<div class="back">I smile whenever I think of you 😊</div>
+</div>
+</div>
 
-<h1>Ashraf ❤️</h1>
-
-<p class="typing" id="loveText"></p>
-
-<h2>Will you be mine forever? 💍</h2>
-
-<button class="yes" onclick="celebrate()">YES ❤️</button>
-<button class="no" id="noBtn">NO 😢</button>
+<div class="flashcard">
+<div class="inner">
+<div class="front">Another One 💌</div>
+<div class="back">You are my favorite person ❤️</div>
+</div>
+</div>
 
 </div>
+
+<br><br>
+
+<button onclick="showLove()">Click For Surprise 🎁</button>
+
+<h2 id="message"></h2>
 
 <script>
 
-/* Loading → Intro */
-setTimeout(()=>{
-document.getElementById("loading").style.display="none";
-document.getElementById("intro").style.display="flex";
-},2000);
+const quotes=[
+"You're my happy place 🏡💕",
+"I love you more every day 🌸",
+"You + Me = Forever ♾️",
+"You're my sweetest dream 🌙"
+];
 
-/* Open Main */
-function openMain(){
-document.getElementById("intro").style.display="none";
-document.getElementById("main").style.display="block";
-document.getElementById("music").play();
-typeText();
-floatingHearts();
+function showLove(){
+let random = quotes[Math.floor(Math.random()*quotes.length)];
+document.getElementById("message").innerHTML=random;
 }
-
-/* Typing Love Message */
-let msg=`I loveee youuu 🥹🫵✨`;
-
-let i=0;
-
-function typeText(){
-if(i<msg.length){
-document.getElementById("loveText").innerHTML+=msg.charAt(i);
-i++;
-setTimeout(typeText,40);
-}
-}
-
-/* Floating Hearts */
-function floatingHearts(){
-setInterval(()=>{
-let heart=document.createElement("div");
-heart.className="heart";
-heart.innerHTML="❤️";
-heart.style.left=Math.random()*100+"vw";
-heart.style.fontSize=(Math.random()*25+15)+"px";
-document.body.appendChild(heart);
-setTimeout(()=>heart.remove(),7000);
-},500);
-}
-
-/* Celebration */
-function celebrate(){
-
-document.body.innerHTML="<h1 style='margin-top:150px'>YAYYY!!! ❤️ Debasmita Loves You Ashraf Forever 💕</h1>";
-
-for(let i=0;i<80;i++){
-let conf=document.createElement("div");
-conf.className="confetti";
-conf.style.left=Math.random()*100+"vw";
-conf.style.top="-10px";
-document.body.appendChild(conf);
-}
-}
-
-/* NO button escape */
-let noBtn=document.getElementById("noBtn");
-
-noBtn.addEventListener("mouseover",()=>{
-noBtn.style.position="absolute";
-noBtn.style.left=Math.random()*80+"vw";
-noBtn.style.top=Math.random()*80+"vh";
-});
 
 </script>
 
 </body>
 </html>
+
 
 
